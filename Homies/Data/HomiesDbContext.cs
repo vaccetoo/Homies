@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Homies.Data.Configuration;
+using Homies.Data.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Homies.Data
@@ -9,32 +11,19 @@ namespace Homies.Data
             : base(options)
         {
         }
+
+        public DbSet<Event> Events { get; set; } = null!;
+
+        public DbSet<Data.Models.Type> Types { get; set; } = null!;
+
+        public DbSet<EventParticipant> EventsParticipants { get; set; } = null!;
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //modelBuilder
-            //    .Entity<Type>()
-            //    .HasData(new Type()
-            //    {
-            //        Id = 1,
-            //        Name = "Animals"
-            //    },
-            //    new Type()
-            //    {
-            //        Id = 2,
-            //        Name = "Fun"
-            //    },
-            //    new Type()
-            //    {
-            //        Id = 3,
-            //        Name = "Discussion"
-            //    },
-            //    new Type()
-            //    {
-            //        Id = 4,
-            //        Name = "Work"
-            //    });
+            modelBuilder.ApplyConfiguration(new EventParticipantConfiguration());
+            modelBuilder.ApplyConfiguration(new TypeConfiguration());
 
-            //base.OnModelCreating(modelBuilder);
+            base.OnModelCreating(modelBuilder);
         }
     }
 }
